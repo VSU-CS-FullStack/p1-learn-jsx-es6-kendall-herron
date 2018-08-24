@@ -8,11 +8,25 @@ class App extends Component {
       //Example 1: Default Parameters
       console.log("Example 1: Default Parameters");
       console.log("No parameters provided. Use default:");
+      const defaultHuman = {
+        name: {
+          first: "Peter",
+          last: "Pan"
+        },
+        favActivity: "flying"
+      };
+
+      function logActivity(p = defaultHuman) {
+        console.log(`${p.name.first} ${p.name.last} loves ${p.favActivity}`);
+      }
+
       logActivity();
 
-      function logActivity(name = "Peter Pan", activity = "flying") {
-        console.log(`${name} loves ${activity}`);
-      }
+      console.log("Use parameters reveived:");
+      logActivity({
+        name: { first: "Nick", last: "Nelson" },
+        favActivity: "baseball"
+      });
 
       console.log("---------------");
 
@@ -171,6 +185,30 @@ class App extends Component {
 
       console.log("--------------");
     };
+
+    //Example 5: Promises
+    console.log("Promises");
+    const getFakeMembers = count =>
+      new Promise((resolves, rejects) => {
+        const api = `https://api.randomuser.me/?nat=US&results=${count}`;
+        const request = new XMLHttpRequest();
+        request.open("GET", api);
+        request.onload = () =>
+          request.status === 200
+            ? resolves(JSON.parse(request.response).results)
+            : rejects(Error(request.statusText));
+        request.onerror = err => rejects(err);
+        request.send();
+      });
+
+    getFakeMembers(5).then(
+      members =>
+        console.log("Example 5: Promises -- Displayed at the end.", members),
+      err => console.error(new Error("cannot load members from randomuser.me"))
+    );
+
+    console.log("---------------");
+
     App();
 
     return (
