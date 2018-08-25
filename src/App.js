@@ -34,6 +34,7 @@ class App extends Component {
       console.log("Example 2: Arrow Functions");
       console.log("lordify is an arrow function");
       const lordify = function(firstname) {
+        //this is not an arrow function
         return `${firstname} of Panama`;
       };
 
